@@ -6,7 +6,7 @@ Built for **PromptWars Hackathon** using **FastAPI**, **React (Vite)**, **Supaba
 
 ---
 
-# 🚀 Live Demo
+# Live Demo
 
 ## Frontend (Vercel)
 
@@ -30,7 +30,7 @@ https://github.com/maheshsathe07/monsoon-preparedness-app
 
 ---
 
-# 📖 Overview
+# Overview
 
 Every year, monsoon floods impact millions of families by causing property damage, transportation disruptions, and emergency situations.
 
@@ -47,9 +47,9 @@ The application consists of a React frontend and a FastAPI backend connected thr
 
 ---
 
-# ✨ Features
+# Features
 
-## 🏠 Household Risk Assessment
+## Household Risk Assessment
 
 - Location-based onboarding
 - Family size capture
@@ -58,7 +58,7 @@ The application consists of a React frontend and a FastAPI backend connected thr
 
 ---
 
-## 🤖 AI Assistant
+## AI Assistant
 
 Ask questions such as:
 
@@ -71,7 +71,7 @@ Powered by OpenAI with structured responses.
 
 ---
 
-## 🌦 Weather Forecast
+## Weather Forecast
 
 - 7-day rainfall forecast
 - Monsoon severity
@@ -80,7 +80,7 @@ Powered by OpenAI with structured responses.
 
 ---
 
-## ✅ Preparedness Checklist
+## Preparedness Checklist
 
 Generate personalized checklists based on:
 
@@ -92,7 +92,7 @@ Users can mark tasks as completed.
 
 ---
 
-## 📍 Community Alerts
+## Community Alerts
 
 Users can report:
 
@@ -107,7 +107,7 @@ Nearby users can view alerts within a configurable radius.
 
 ---
 
-## 🆔 Emergency ID
+## Emergency ID
 
 Generate emergency information including:
 
@@ -119,7 +119,7 @@ Generate emergency information including:
 
 ---
 
-# 🏗️ System Architecture
+# System Architecture
 
 ```
                 React (Vite)
@@ -176,7 +176,7 @@ Generate emergency information including:
 
 ---
 
-# 📂 Repository Structure
+# Repository Structure
 
 ```
 monsoon-preparedness-system
