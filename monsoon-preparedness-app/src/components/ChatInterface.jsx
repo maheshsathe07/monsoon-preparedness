@@ -1,16 +1,19 @@
 import { useState, useRef, useEffect } from 'react'
 import { Send, Zap } from 'lucide-react'
 import { api } from '../lib/api'
+import { getLanguageName, translations } from '../lib/i18n'
 
 export default function ChatInterface({ userProfile, language, onOpenAction }) {
+  const t = translations[language] || translations.en
+  const languageName = getLanguageName(language)
   const [messages, setMessages] = useState([
     {
       id: 'welcome',
       type: 'ai',
-      text: `Your profile is ready for ${userProfile.location.label}. Risk score: ${userProfile.risk_score}/100. ${userProfile.recommendation_summary}`,
+      text: `${t.profileReady} ${userProfile.location.label}. ${t.riskScore}: ${userProfile.risk_score}/100. ${userProfile.recommendation_summary}`,
       actions: [
-        { label: 'Show checklist', endpoint: '/checklist', icon: 'list' },
-        { label: 'View map alerts', endpoint: '/alerts', icon: 'map' },
+        { label: t.showChecklist, endpoint: '/checklist', icon: 'list' },
+        { label: t.viewMapAlerts, endpoint: '/alerts', icon: 'map' },
       ],
     },
   ])
@@ -22,11 +25,26 @@ export default function ChatInterface({ userProfile, language, onOpenAction }) {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
+  useEffect(() => {
+    setMessages(prev => prev.map(message => (
+      message.id === 'welcome'
+        ? {
+            ...message,
+            text: `${t.profileReady} ${userProfile.location.label}. ${t.riskScore}: ${userProfile.risk_score}/100. ${userProfile.recommendation_summary}`,
+            actions: [
+              { label: t.showChecklist, endpoint: '/checklist', icon: 'list' },
+              { label: t.viewMapAlerts, endpoint: '/alerts', icon: 'map' },
+            ],
+          }
+        : message
+    )))
+  }, [language, t, userProfile.location.label, userProfile.recommendation_summary, userProfile.risk_score])
+
   const suggestedQuestions = [
-    'What should I do about flooding?',
-    'Prepare for high winds',
-    'Essential emergency supplies',
-    'Tips for families with elders',
+    t.qFlood,
+    t.qWind,
+    t.qSupplies,
+    t.qFamily,
   ]
 
   const openAction = (action) => {
@@ -60,9 +78,11 @@ export default function ChatInterface({ userProfile, language, onOpenAction }) {
             risk_score: userProfile.risk_score,
             recommended_prep_level: userProfile.recommended_prep_level,
             language,
+            language_name: languageName,
           },
           location: { lat: userProfile.location.lat, lng: userProfile.location.lng },
           prep_history: [],
+          response_language: languageName,
         },
       })
       setMessages(prev => [...prev, {
@@ -76,7 +96,7 @@ export default function ChatInterface({ userProfile, language, onOpenAction }) {
       setMessages(prev => [...prev, {
         id: `err_${Date.now()}`,
         type: 'ai',
-        text: err.message || 'Backend is not reachable. Start FastAPI on port 8000 and try again.',
+        text: err.message || t.backendError,
         actions: [],
       }])
     } finally {
@@ -145,8 +165,8 @@ export default function ChatInterface({ userProfile, language, onOpenAction }) {
       </div>
 
       {messages.length === 1 && (
-         <div className="px-3 py-3 md:px-5 border-t border-border-light bg-bg-secondary">
-          <p className="text-xs uppercase text-text-muted font-semibold mb-3">Quick Questions</p>
+        <div className="px-3 py-3 md:px-5 border-t border-border-light bg-bg-secondary">
+          <p className="text-xs uppercase text-text-muted font-semibold mb-3">{t.quickQuestions}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {suggestedQuestions.map((q, idx) => (
               <button
@@ -161,14 +181,14 @@ export default function ChatInterface({ userProfile, language, onOpenAction }) {
         </div>
       )}
 
-       <div className="px-3 py-3 md:px-5 border-t border-border-light bg-bg-secondary">
+        <div className="px-3 py-3 md:px-5 border-t border-border-light bg-bg-secondary">
         <div className="flex gap-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && !e.nativeEvent.isComposing && handleSend()}
-            placeholder="Ask me anything about monsoon prep..."
+            placeholder={t.askPlaceholder}
             className="flex-1 px-4 py-3 rounded-lg bg-bg-secondary border border-border-default focus:border-primary outline-none transition text-sm"
           />
           <button

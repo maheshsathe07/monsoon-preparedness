@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { X, Pin, PinOff, RefreshCcw } from 'lucide-react'
 import { api } from '../lib/api'
 
-export default function ChecklistModal({ onClose, userProfile }) {
+export default function ChecklistModal({ onClose, userProfile, t }) {
   const [checklist, setChecklist] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -60,8 +60,8 @@ export default function ChecklistModal({ onClose, userProfile }) {
       <div className="bg-bg-secondary w-full md:w-[440px] max-h-screen md:max-h-[640px] rounded-t-2xl md:rounded-2xl border border-border-default flex flex-col">
         <div className="px-6 py-4 border-b border-border-default flex items-center justify-between sticky top-0 bg-bg-secondary rounded-t-2xl">
           <div>
-            <h2 className="text-xl font-bold">Monsoon Checklist</h2>
-            <p className="text-xs text-text-muted">{completed}/{flatItems.length || 0} items completed</p>
+            <h2 className="text-xl font-bold">{t.monsoonChecklist}</h2>
+            <p className="text-xs text-text-muted">{completed}/{flatItems.length || 0} {t.completed}</p>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-bg-tertiary rounded-lg transition" aria-label="Close checklist">
             <X className="w-5 h-5" />
@@ -70,7 +70,7 @@ export default function ChecklistModal({ onClose, userProfile }) {
 
         <div className="px-6 py-3 border-b border-border-default">
           <div className="flex justify-between text-xs text-text-muted mb-2">
-            <span>Progress</span>
+            <span>{t.progress}</span>
             <span>{checklist?.completion_pct || 0}%</span>
           </div>
           <div className="w-full h-2 bg-border-default rounded-full overflow-hidden">
@@ -85,7 +85,7 @@ export default function ChecklistModal({ onClose, userProfile }) {
           {loading && (
             <div className="flex items-center gap-2 text-sm text-text-secondary">
               <RefreshCcw className="w-4 h-4 animate-spin" />
-              Loading checklist...
+              {t.loadingChecklist}
             </div>
           )}
 
@@ -97,7 +97,7 @@ export default function ChecklistModal({ onClose, userProfile }) {
 
           {!loading && criticalItems.length > 0 && (
             <div className="mb-4">
-              <p className="text-xs uppercase text-text-muted font-semibold mb-2">Critical Items</p>
+              <p className="text-xs uppercase text-text-muted font-semibold mb-2">{t.criticalItems}</p>
               <div className="space-y-2">
                 {criticalItems.map(item => (
                   <ChecklistItem key={item.id} item={item} onToggle={handleToggle} />
@@ -108,7 +108,7 @@ export default function ChecklistModal({ onClose, userProfile }) {
 
           {!loading && regularItems.length > 0 && (
             <div>
-              <p className="text-xs uppercase text-text-muted font-semibold mb-2">Other Items</p>
+              <p className="text-xs uppercase text-text-muted font-semibold mb-2">{t.otherItems}</p>
               <div className="space-y-2">
                 {regularItems.map(item => (
                   <ChecklistItem key={item.id} item={item} onToggle={handleToggle} />
@@ -120,7 +120,7 @@ export default function ChecklistModal({ onClose, userProfile }) {
 
         <div className="px-6 py-4 border-t border-border-default bg-bg-primary">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-text-secondary">Estimated Starting Cost</span>
+            <span className="text-sm text-text-secondary">{t.estimatedCost}</span>
             <span className="text-lg font-bold text-primary">Rs {totalCost.toLocaleString()}</span>
           </div>
         </div>

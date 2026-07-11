@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { X, AlertCircle, Plus, RefreshCcw } from 'lucide-react'
 import { api } from '../lib/api'
 
-export default function MapModal({ onClose, userProfile }) {
+export default function MapModal({ onClose, userProfile, t }) {
   const [alerts, setAlerts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -30,10 +30,10 @@ export default function MapModal({ onClose, userProfile }) {
   }, [location])
 
   const alertColors = {
-    flood: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', label: 'Flood' },
-    blocked_road: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', label: 'Road Blocked' },
-    shelter: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', label: 'Shelter' },
-    other: { bg: 'bg-bg-tertiary', text: 'text-text-secondary', border: 'border-border-default', label: 'Update' },
+    flood: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', label: t.flood },
+    blocked_road: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', label: t.roadBlocked },
+    shelter: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', label: t.shelterOpen },
+    other: { bg: 'bg-bg-tertiary', text: 'text-text-secondary', border: 'border-border-default', label: t.other },
   }
 
   const handleAddAlert = async () => {
@@ -60,8 +60,8 @@ export default function MapModal({ onClose, userProfile }) {
       <div className="bg-bg-secondary w-full md:w-[440px] max-h-screen md:max-h-[640px] rounded-t-2xl md:rounded-2xl border border-border-default flex flex-col">
         <div className="px-6 py-4 border-b border-border-default flex items-center justify-between sticky top-0 bg-bg-secondary rounded-t-2xl">
           <div>
-            <h2 className="text-xl font-bold">Community Map</h2>
-            <p className="text-xs text-text-muted">{location.label} - {alerts.length} active alerts</p>
+            <h2 className="text-xl font-bold">{t.communityMap}</h2>
+            <p className="text-xs text-text-muted">{location.label} - {alerts.length} {t.activeAlerts}</p>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-bg-tertiary rounded-lg transition" aria-label="Close map">
             <X className="w-5 h-5" />
@@ -71,7 +71,7 @@ export default function MapModal({ onClose, userProfile }) {
         <div className="mx-6 my-4 border border-border-default bg-bg-tertiary h-36 rounded-lg flex items-center justify-center">
           <div className="text-center px-6">
             <AlertCircle className="w-8 h-8 text-text-muted mx-auto mb-2 opacity-60" />
-            <p className="text-xs text-text-muted">Nearby alerts from backend</p>
+            <p className="text-xs text-text-muted">{t.nearbyAlerts}</p>
             <p className="text-xs text-text-muted">{location.lat.toFixed(3)}, {location.lng.toFixed(3)}</p>
           </div>
         </div>
@@ -80,7 +80,7 @@ export default function MapModal({ onClose, userProfile }) {
           {loading && (
             <div className="flex items-center gap-2 text-sm text-text-secondary">
               <RefreshCcw className="w-4 h-4 animate-spin" />
-              Loading nearby alerts...
+              {t.loadingAlerts}
             </div>
           )}
 
@@ -92,7 +92,7 @@ export default function MapModal({ onClose, userProfile }) {
 
           {!loading && alerts.length === 0 && (
             <div className="rounded-lg border border-border-default bg-bg-tertiary px-4 py-6 text-center text-sm text-text-secondary">
-              No community alerts nearby yet.
+              {t.noAlerts}
             </div>
           )}
 
@@ -113,8 +113,8 @@ export default function MapModal({ onClose, userProfile }) {
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <p className="text-xs text-text-muted">{alert.distance_km ?? 0} km away</p>
-                  <p className="text-xs text-text-muted">{Math.round((alert.confidence || 0.7) * 100)}% confidence</p>
+                  <p className="text-xs text-text-muted">{alert.distance_km ?? 0} km {t.away}</p>
+                  <p className="text-xs text-text-muted">{Math.round((alert.confidence || 0.7) * 100)}% {t.confidence}</p>
                 </div>
               </div>
             )
@@ -123,27 +123,27 @@ export default function MapModal({ onClose, userProfile }) {
 
         {showForm && (
           <div className="px-6 py-4 border-t border-border-default bg-bg-tertiary">
-            <p className="text-sm font-semibold mb-3">Report an Issue</p>
+            <p className="text-sm font-semibold mb-3">{t.reportIssue}</p>
             <div className="space-y-3 mb-4">
               <select
                 value={newAlert.type}
                 onChange={(e) => setNewAlert(prev => ({ ...prev, type: e.target.value }))}
                 className="w-full px-3 py-2 rounded-lg bg-bg-secondary border border-border-default text-sm outline-none focus:border-primary"
               >
-                <option value="flood">Flood</option>
-                <option value="blocked_road">Road Blocked</option>
-                <option value="shelter">Shelter Open</option>
-                <option value="other">Other</option>
+                <option value="flood">{t.flood}</option>
+                <option value="blocked_road">{t.roadBlocked}</option>
+                <option value="shelter">{t.shelterOpen}</option>
+                <option value="other">{t.other}</option>
               </select>
               <input
                 type="text"
-                placeholder="Brief title"
+                placeholder={t.briefTitle}
                 value={newAlert.title}
                 onChange={(e) => setNewAlert(prev => ({ ...prev, title: e.target.value }))}
                 className="w-full px-3 py-2 rounded-lg bg-bg-secondary border border-border-default text-sm outline-none focus:border-primary"
               />
               <textarea
-                placeholder="Description"
+                placeholder={t.description}
                 value={newAlert.description}
                 onChange={(e) => setNewAlert(prev => ({ ...prev, description: e.target.value }))}
                 rows="2"
@@ -154,13 +154,13 @@ export default function MapModal({ onClose, userProfile }) {
                   onClick={() => setShowForm(false)}
                   className="flex-1 py-2 rounded-lg bg-bg-secondary border border-border-default text-sm font-medium hover:bg-border-default transition"
                 >
-                  Cancel
+                  {t.cancel}
                 </button>
                 <button
                   onClick={handleAddAlert}
                   className="flex-1 py-2 rounded-lg bg-primary text-white text-sm font-medium hover:bg-blue-600 transition"
                 >
-                  Submit
+                  {t.submit}
                 </button>
               </div>
             </div>
@@ -173,7 +173,7 @@ export default function MapModal({ onClose, userProfile }) {
             className="w-full flex items-center justify-center gap-2 py-3 bg-primary hover:bg-blue-600 text-white font-medium rounded-lg transition"
           >
             <Plus className="w-5 h-5" />
-            {showForm ? 'Cancel' : 'Report Alert'}
+            {showForm ? t.cancel : t.reportAlert}
           </button>
         </div>
       </div>

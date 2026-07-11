@@ -5,34 +5,14 @@ import ChecklistModal from '../components/ChecklistModal'
 import MapModal from '../components/MapModal'
 import EmergencyIDModal from '../components/EmergencyIDModal'
 import WeatherWidget from '../components/WeatherWidget'
+import { translations } from '../lib/i18n'
 
 export default function MainApp({ userProfile, onLogout }) {
   const [activeModal, setActiveModal] = useState(null)
   const [language, setLanguage] = useState('en')
   const [unreadAlerts, setUnreadAlerts] = useState(0)
 
-  const translations = {
-    en: {
-      checklist: 'Checklist',
-      map: 'Map & Alerts',
-      id: 'Emergency ID',
-      chat: 'Ask AI',
-    },
-    hi: {
-      checklist: 'Checklist',
-      map: 'Map & Alerts',
-      id: 'Emergency ID',
-      chat: 'Ask AI',
-    },
-    ta: {
-      checklist: 'Checklist',
-      map: 'Map & Alerts',
-      id: 'Emergency ID',
-      chat: 'Ask AI',
-    },
-  }
-
-  const t = translations[language]
+  const t = translations[language] || translations.en
 
   const handleOpenModal = (modal) => {
     setActiveModal(modal)
@@ -53,20 +33,20 @@ export default function MainApp({ userProfile, onLogout }) {
       />
 
       <div className="flex-1 flex flex-col min-w-0">
-        <WeatherWidget location={userProfile.location} />
-        <ChatInterface userProfile={userProfile} language={language} onOpenAction={handleOpenModal} />
+        <WeatherWidget location={userProfile.location} t={t} />
+        <ChatInterface userProfile={userProfile} language={language} t={t} onOpenAction={handleOpenModal} />
       </div>
 
       {activeModal === 'checklist' && (
-        <ChecklistModal onClose={() => setActiveModal(null)} userProfile={userProfile} />
+        <ChecklistModal onClose={() => setActiveModal(null)} userProfile={userProfile} t={t} />
       )}
 
       {activeModal === 'map' && (
-        <MapModal onClose={() => setActiveModal(null)} userProfile={userProfile} />
+        <MapModal onClose={() => setActiveModal(null)} userProfile={userProfile} t={t} />
       )}
 
       {activeModal === 'id' && (
-        <EmergencyIDModal onClose={() => setActiveModal(null)} userProfile={userProfile} />
+        <EmergencyIDModal onClose={() => setActiveModal(null)} userProfile={userProfile} t={t} />
       )}
     </div>
   )

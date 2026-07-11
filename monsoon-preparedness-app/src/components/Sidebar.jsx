@@ -1,5 +1,6 @@
 import { CheckSquare, LogOut, Map, Menu, Smartphone } from 'lucide-react'
 import { useState } from 'react'
+import { LANGUAGES } from '../lib/i18n'
 
 export default function Sidebar({ onSelectAction, language, onLanguageChange, t, unreadAlerts, onLogout }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -38,15 +39,15 @@ export default function Sidebar({ onSelectAction, language, onLanguageChange, t,
               <span className="text-white font-bold text-lg">M</span>
             </div>
             <div>
-              <h1 className="font-bold text-text-primary">Monsoon Prep</h1>
-              <p className="text-xs text-text-muted">Stay Safe</p>
+              <h1 className="font-bold text-text-primary">{t.appName}</h1>
+              <p className="text-xs text-text-muted">{t.staySafe}</p>
             </div>
           </div>
         </div>
 
         {/* Quick Actions */}
         <div className="flex-1 overflow-y-auto px-4 py-6 space-y-3">
-          <p className="text-xs uppercase text-text-muted font-semibold px-2 mb-4">Quick Actions</p>
+          <p className="text-xs uppercase text-text-muted font-semibold px-2 mb-4">{t.quickActions}</p>
           
           {actions.map(({ id, label, icon: Icon, color, badge }) => (
             <button
@@ -69,19 +70,20 @@ export default function Sidebar({ onSelectAction, language, onLanguageChange, t,
 
         {/* Language Toggle */}
         <div className="px-4 py-6 border-t border-border-default">
-          <p className="text-xs uppercase text-text-muted font-semibold mb-3">Language</p>
+          <p className="text-xs uppercase text-text-muted font-semibold mb-3">{t.language}</p>
           <div className="flex gap-2">
-            {['en', 'hi', 'ta'].map((lang) => (
+            {LANGUAGES.map((item) => (
               <button
-                key={lang}
-                onClick={() => onLanguageChange(lang)}
+                key={item.code}
+                onClick={() => onLanguageChange(item.code)}
+                title={item.name}
                 className={`flex-1 py-2 px-3 rounded-lg text-sm font-medium transition ${
-                  language === lang
+                  language === item.code
                     ? 'bg-primary text-white'
                     : 'bg-bg-tertiary text-text-secondary hover:bg-border-default'
                 }`}
               >
-                {lang.toUpperCase()}
+                {item.label}
               </button>
             ))}
           </div>
@@ -95,10 +97,10 @@ export default function Sidebar({ onSelectAction, language, onLanguageChange, t,
             className="mb-3 flex w-full items-center justify-center gap-2 rounded-lg bg-bg-tertiary px-3 py-2 text-sm text-text-secondary hover:bg-border-default hover:text-text-primary"
           >
             <LogOut className="h-4 w-4" />
-            Logout
+            {t.logout}
           </button>
           <p className="text-xs text-text-muted">Version 1.0</p>
-          <p className="text-xs text-text-muted mt-2">Backend integrated</p>
+          <p className="text-xs text-text-muted mt-2">{t.backendIntegrated}</p>
         </div>
       </div>
 

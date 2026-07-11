@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { X, Copy, Download, Save } from 'lucide-react'
 import { api } from '../lib/api'
 
-export default function EmergencyIDModal({ onClose, userProfile }) {
+export default function EmergencyIDModal({ onClose, userProfile, t }) {
   const [copied, setCopied] = useState(false)
   const [activeTab, setActiveTab] = useState('edit')
   const [loading, setLoading] = useState(false)
@@ -77,8 +77,8 @@ export default function EmergencyIDModal({ onClose, userProfile }) {
       <div className="bg-bg-secondary w-full md:w-[440px] max-h-screen md:max-h-[640px] rounded-t-2xl md:rounded-2xl border border-border-default flex flex-col">
         <div className="px-6 py-4 border-b border-border-default flex items-center justify-between sticky top-0 bg-bg-secondary rounded-t-2xl">
           <div>
-            <h2 className="text-xl font-bold">Emergency ID Card</h2>
-            <p className="text-xs text-text-muted">Medical information and contacts</p>
+            <h2 className="text-xl font-bold">{t.emergencyIdCard}</h2>
+            <p className="text-xs text-text-muted">{t.medicalInfo}</p>
           </div>
           <button onClick={onClose} className="p-2 hover:bg-bg-tertiary rounded-lg transition" aria-label="Close emergency ID">
             <X className="w-5 h-5" />
@@ -86,9 +86,9 @@ export default function EmergencyIDModal({ onClose, userProfile }) {
         </div>
 
         <div className="flex border-b border-border-default px-6">
-          <TabButton label="View Card" active={activeTab === 'view'} onClick={() => setActiveTab('view')} disabled={!createdId} />
-          <TabButton label="Share" active={activeTab === 'share'} onClick={() => setActiveTab('share')} disabled={!createdId} />
-          <TabButton label="Edit" active={activeTab === 'edit'} onClick={() => setActiveTab('edit')} />
+          <TabButton label={t.viewCard} active={activeTab === 'view'} onClick={() => setActiveTab('view')} disabled={!createdId} />
+          <TabButton label={t.share} active={activeTab === 'share'} onClick={() => setActiveTab('share')} disabled={!createdId} />
+          <TabButton label={t.edit} active={activeTab === 'edit'} onClick={() => setActiveTab('edit')} />
         </div>
 
         <div className="flex-1 overflow-y-auto px-6 py-6">
@@ -105,20 +105,20 @@ export default function EmergencyIDModal({ onClose, userProfile }) {
                 <div className="text-2xl font-bold mb-1">{form.full_name}</div>
                 <div className="flex gap-6 mb-6 text-sm">
                   <div>
-                    <span className="opacity-75">DOB:</span> {form.dob || 'Not provided'}
+                    <span className="opacity-75">{t.dob}:</span> {form.dob || 'Not provided'}
                   </div>
                   <div>
-                    <span className="opacity-75">Blood:</span> {form.blood_group || 'Not provided'}
+                    <span className="opacity-75">{t.bloodGroup}:</span> {form.blood_group || 'Not provided'}
                   </div>
                 </div>
                 <div className="space-y-2 text-sm">
-                  <div><span className="opacity-75">Allergies:</span> {form.allergies || 'None listed'}</div>
-                  <div><span className="opacity-75">Medicines:</span> {form.meds || 'None listed'}</div>
+                  <div><span className="opacity-75">{t.allergies}:</span> {form.allergies || 'None listed'}</div>
+                  <div><span className="opacity-75">{t.medicines}:</span> {form.meds || 'None listed'}</div>
                 </div>
               </div>
 
               <div className="flex flex-col items-center">
-                <p className="text-xs text-text-muted mb-3">Scan for full details</p>
+                <p className="text-xs text-text-muted mb-3">{t.scanDetails}</p>
                 <div className="bg-white p-4 rounded-lg">
                   <img src={qrCodeUrl} alt="Emergency ID QR" className="w-32 h-32" />
                 </div>
@@ -133,9 +133,9 @@ export default function EmergencyIDModal({ onClose, userProfile }) {
 
           {activeTab === 'share' && createdId && (
             <div className="space-y-4">
-              <p className="text-sm text-text-secondary">Share your emergency ID with family or rescuers.</p>
+              <p className="text-sm text-text-secondary">{t.shareIdHelp}</p>
               <div>
-                <label className="text-xs uppercase text-text-muted font-semibold mb-2 block">Share Link</label>
+                <label className="text-xs uppercase text-text-muted font-semibold mb-2 block">{t.shareLink}</label>
                 <div className="flex gap-2">
                   <input
                     type="text"
@@ -151,7 +151,7 @@ export default function EmergencyIDModal({ onClose, userProfile }) {
                     <Copy className="w-4 h-4" />
                   </button>
                 </div>
-                {copied && <p className="text-xs text-success mt-1">Copied</p>}
+                {copied && <p className="text-xs text-success mt-1">{t.copied}</p>}
               </div>
               <div className="rounded-lg border border-border-default bg-bg-tertiary p-3 text-xs text-text-muted">
                 Backend PDF path: {createdId.pdf_path}
@@ -161,16 +161,16 @@ export default function EmergencyIDModal({ onClose, userProfile }) {
 
           {activeTab === 'edit' && (
             <div className="space-y-3">
-              <Field label="Full Name" value={form.full_name} onChange={value => updateField('full_name', value)} />
+              <Field label={t.fullName} value={form.full_name} onChange={value => updateField('full_name', value)} />
               <div className="grid grid-cols-2 gap-3">
-                <Field label="DOB" type="date" value={form.dob} onChange={value => updateField('dob', value)} />
-                <Field label="Blood Group" value={form.blood_group} onChange={value => updateField('blood_group', value)} />
+                <Field label={t.dob} type="date" value={form.dob} onChange={value => updateField('dob', value)} />
+                <Field label={t.bloodGroup} value={form.blood_group} onChange={value => updateField('blood_group', value)} />
               </div>
-              <Field label="Allergies" value={form.allergies} onChange={value => updateField('allergies', value)} placeholder="Comma separated" />
-              <Field label="Medicines" value={form.meds} onChange={value => updateField('meds', value)} placeholder="Comma separated" />
-              <Field label="Emergency Contact Name" value={form.contact_name} onChange={value => updateField('contact_name', value)} />
-              <Field label="Emergency Contact Phone" value={form.contact_phone} onChange={value => updateField('contact_phone', value)} />
-              <Field label="Insurance Details" value={form.insurance_details} onChange={value => updateField('insurance_details', value)} placeholder="Provider, policy number, helpline" />
+              <Field label={t.allergies} value={form.allergies} onChange={value => updateField('allergies', value)} placeholder="Comma separated" />
+              <Field label={t.medicines} value={form.meds} onChange={value => updateField('meds', value)} placeholder="Comma separated" />
+              <Field label={t.emergencyContactName} value={form.contact_name} onChange={value => updateField('contact_name', value)} />
+              <Field label={t.emergencyContactPhone} value={form.contact_phone} onChange={value => updateField('contact_phone', value)} />
+              <Field label={t.insuranceDetails} value={form.insurance_details} onChange={value => updateField('insurance_details', value)} placeholder="Provider, policy number, helpline" />
             </div>
           )}
         </div>
@@ -183,7 +183,7 @@ export default function EmergencyIDModal({ onClose, userProfile }) {
               className="flex-1 flex items-center justify-center gap-2 py-3 bg-primary hover:bg-blue-600 disabled:opacity-60 text-white font-medium rounded-lg transition"
             >
               <Save className="w-4 h-4" />
-              {loading ? 'Saving...' : 'Save ID'}
+              {loading ? t.saving : t.saveId}
             </button>
           ) : (
             <button
@@ -191,7 +191,7 @@ export default function EmergencyIDModal({ onClose, userProfile }) {
               className="flex-1 flex items-center justify-center gap-2 py-3 bg-bg-tertiary hover:bg-border-default text-text-primary font-medium rounded-lg transition"
             >
               <Download className="w-4 h-4" />
-              Share / Export
+              {t.shareExport}
             </button>
           )}
         </div>
