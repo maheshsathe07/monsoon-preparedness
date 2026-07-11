@@ -7,7 +7,7 @@ import EmergencyIDModal from '../components/EmergencyIDModal'
 import WeatherWidget from '../components/WeatherWidget'
 import { translations } from '../lib/i18n'
 
-export default function MainApp({ userProfile, onLogout }) {
+export default function MainApp({ userProfile = {}, onLogout = () => {} }) {
   const [activeModal, setActiveModal] = useState(null)
   const [language, setLanguage] = useState('en')
   const [unreadAlerts, setUnreadAlerts] = useState(0)
