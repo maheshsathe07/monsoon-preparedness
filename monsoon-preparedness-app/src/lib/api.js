@@ -10,17 +10,23 @@ function normalizeApiBaseUrl(url) {
 const API_BASE_URL = normalizeApiBaseUrl(import.meta.env.VITE_API_BASE_URL)
 const API_PREFIX = `${API_BASE_URL}/api/v1`
 const AUTH_STORAGE_KEY = 'monsoon_auth'
+const AUTH_STORAGE_VERSION = 1
 
 export function getStoredAuth() {
   try {
-    return JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null')
+    const auth = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || 'null')
+    if (!auth || auth.version !== AUTH_STORAGE_VERSION || !auth.access_token || !auth.user_id) {
+      localStorage.removeItem(AUTH_STORAGE_KEY)
+      return null
+    }
+    return auth
   } catch {
     return null
   }
 }
 
 export function storeAuth(auth) {
-  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(auth))
+  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({ ...auth, version: AUTH_STORAGE_VERSION }))
 }
 
 export function clearStoredAuth() {

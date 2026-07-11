@@ -39,13 +39,13 @@ export default function AuthScreen({ onAuthenticated }) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-bg-primary to-bg-secondary flex items-center justify-center px-6 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-bg-primary to-bg-tertiary flex items-center justify-center px-4 py-6">
       <div className="w-full max-w-md animate-slideUp">
-        <div className="mb-8 text-center">
-          <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-primary to-blue-600">
-            <Cloud className="h-8 w-8 text-white" />
+        <div className="mb-6 text-center">
+          <div className="mb-3 inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-primary to-sky-500 shadow-sm">
+            <Cloud className="h-7 w-7 text-white" />
           </div>
-          <h1 className="mb-2 text-3xl font-bold text-white">Monsoon Prep</h1>
+          <h1 className="mb-1 text-2xl font-bold text-text-primary">Monsoon Prep</h1>
           <p className="text-sm text-text-secondary">Sign in to save your plans, alerts, and emergency IDs.</p>
         </div>
 
@@ -66,7 +66,7 @@ export default function AuthScreen({ onAuthenticated }) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border border-border-default bg-bg-secondary p-5">
+        <form onSubmit={handleSubmit} className="space-y-3 rounded-lg border border-border-light bg-bg-secondary p-5 shadow-sm">
           <div>
             <label className="mb-1 block text-xs font-semibold uppercase text-text-muted">Email</label>
             <input
@@ -74,7 +74,7 @@ export default function AuthScreen({ onAuthenticated }) {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
-              className="w-full rounded-lg border border-border-default bg-bg-tertiary px-4 py-3 text-sm outline-none transition focus:border-primary"
+              className="w-full rounded-lg border border-border-default bg-white px-4 py-3 text-sm outline-none transition focus:border-primary"
             />
           </div>
 
@@ -85,7 +85,7 @@ export default function AuthScreen({ onAuthenticated }) {
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
               placeholder="+91 98765 43210"
-              className="w-full rounded-lg border border-border-default bg-bg-tertiary px-4 py-3 text-sm outline-none transition focus:border-primary"
+              className="w-full rounded-lg border border-border-default bg-white px-4 py-3 text-sm outline-none transition focus:border-primary"
             />
             <p className="mt-1 text-xs text-text-muted">Use email or phone. Email is easiest for demo login.</p>
           </div>
@@ -99,12 +99,12 @@ export default function AuthScreen({ onAuthenticated }) {
               minLength={8}
               required
               placeholder="At least 8 characters"
-              className="w-full rounded-lg border border-border-default bg-bg-tertiary px-4 py-3 text-sm outline-none transition focus:border-primary"
+              className="w-full rounded-lg border border-border-default bg-white px-4 py-3 text-sm outline-none transition focus:border-primary"
             />
           </div>
 
           {error && (
-            <div className="rounded-lg border border-red-700 bg-red-950 px-3 py-2 text-sm text-red-200">
+            <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
               {error}
             </div>
           )}

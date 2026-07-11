@@ -90,7 +90,7 @@ export default function ChecklistModal({ onClose, userProfile }) {
           )}
 
           {error && (
-            <div className="rounded-lg border border-red-700 bg-red-950 px-3 py-2 text-sm text-red-200">
+            <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
               {error}
             </div>
           )}

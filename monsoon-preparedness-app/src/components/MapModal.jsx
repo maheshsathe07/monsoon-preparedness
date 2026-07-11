@@ -30,9 +30,9 @@ export default function MapModal({ onClose, userProfile }) {
   }, [location])
 
   const alertColors = {
-    flood: { bg: 'bg-red-950', text: 'text-red-300', border: 'border-red-700', label: 'Flood' },
-    blocked_road: { bg: 'bg-yellow-950', text: 'text-yellow-300', border: 'border-yellow-700', label: 'Road Blocked' },
-    shelter: { bg: 'bg-green-950', text: 'text-green-300', border: 'border-green-700', label: 'Shelter' },
+    flood: { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', label: 'Flood' },
+    blocked_road: { bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', label: 'Road Blocked' },
+    shelter: { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', label: 'Shelter' },
     other: { bg: 'bg-bg-tertiary', text: 'text-text-secondary', border: 'border-border-default', label: 'Update' },
   }
 
@@ -85,7 +85,7 @@ export default function MapModal({ onClose, userProfile }) {
           )}
 
           {error && (
-            <div className="rounded-lg border border-red-700 bg-red-950 px-3 py-2 text-sm text-red-200">
+            <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
               {error}
             </div>
           )}
@@ -101,7 +101,7 @@ export default function MapModal({ onClose, userProfile }) {
             return (
               <div
                 key={alert.id}
-                className={`p-4 rounded-lg border-2 ${colors.bg} ${colors.border}`}
+                className={`p-3 rounded-lg border ${colors.bg} ${colors.border}`}
               >
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div className="min-w-0">

@@ -30,61 +30,48 @@ export default function WeatherWidget({ location }) {
 
   const getRiskColor = (risk) => {
     switch (risk) {
-      case 'RED': return 'bg-red-950 border-red-700 text-red-300'
-      case 'YELLOW': return 'bg-yellow-950 border-yellow-700 text-yellow-300'
-      case 'GREEN': return 'bg-green-950 border-green-700 text-green-300'
+      case 'RED': return 'bg-red-50 border-red-200 text-red-700'
+      case 'YELLOW': return 'bg-amber-50 border-amber-200 text-amber-700'
+      case 'GREEN': return 'bg-emerald-50 border-emerald-200 text-emerald-700'
       default: return 'bg-bg-tertiary border-border-default text-text-secondary'
     }
   }
 
   return (
-    <div className="px-4 py-4 md:px-8 border-b border-border-default bg-bg-secondary">
-      <div className="flex items-center justify-between gap-4 mb-4">
+    <div className="px-3 py-3 md:px-5 border-b border-border-light bg-bg-secondary shadow-sm">
+      <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <p className="text-xs uppercase text-text-muted font-semibold mb-1 truncate">{location.label}</p>
           <div className="flex items-center gap-3">
             <div>
-              <p className="text-3xl font-bold">{rainfall.toFixed(0)} mm</p>
-              <p className="text-sm text-text-secondary">Highest 7-day rainfall</p>
+              <p className="text-2xl font-bold text-text-primary">{rainfall.toFixed(0)} mm</p>
+              <p className="text-xs text-text-secondary">Max 7-day rain</p>
             </div>
-            <Cloud className="w-12 h-12 text-blue-400 flex-shrink-0" />
+            <Cloud className="w-9 h-9 text-sky-500 flex-shrink-0" />
           </div>
         </div>
 
-        <div className={`px-4 py-2 rounded-lg border-2 ${getRiskColor(level)} text-center flex-shrink-0`}>
+        <div className={`px-3 py-2 rounded-lg border ${getRiskColor(level)} text-center flex-shrink-0`}>
           <p className="text-xs font-bold">{level} Risk</p>
-          <p className="text-xs mt-1">Monsoon Alert</p>
         </div>
       </div>
 
       {error && (
-        <div className="mb-4 flex items-center gap-2 rounded-lg border border-yellow-700 bg-yellow-950 px-3 py-2 text-xs text-yellow-100">
+        <div className="mt-2 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700">
           <AlertTriangle className="w-4 h-4" />
           {error}
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-3 mb-4">
-        <div className="p-3 bg-bg-tertiary rounded-lg">
-          <p className="text-xs text-text-muted mb-1">Rain forecast</p>
-          <p className="text-lg font-bold">{rainfall.toFixed(1)} mm</p>
-        </div>
-        <div className="p-3 bg-bg-tertiary rounded-lg">
-          <p className="text-xs text-text-muted mb-1">Backend source</p>
-          <p className="text-lg font-bold">Open-Meteo</p>
-        </div>
-      </div>
-
-      <div>
-        <p className="text-xs uppercase text-text-muted font-semibold mb-3">7-Day Forecast</p>
-        <div className="flex gap-2 overflow-x-auto pb-2">
+      <div className="mt-3">
+        <div className="flex gap-2 overflow-x-auto pb-1">
           {(weatherData?.daily_rainfall_mm || [0, 0, 0, 0, 0, 0, 0]).map((dailyRain, idx) => (
             <div
               key={idx}
-              className={`flex-shrink-0 p-3 rounded-lg border-2 w-24 text-center ${getRiskColor(dailyRain > 60 ? 'RED' : dailyRain >= 20 ? 'YELLOW' : 'GREEN')}`}
+              className={`flex-shrink-0 px-2 py-2 rounded-lg border w-20 text-center ${getRiskColor(dailyRain > 60 ? 'RED' : dailyRain >= 20 ? 'YELLOW' : 'GREEN')}`}
             >
-              <Droplets className="w-4 h-4 mx-auto mb-2" />
-              <p className="text-xs font-semibold mb-2">Day {idx + 1}</p>
+              <Droplets className="w-3 h-3 mx-auto mb-1" />
+              <p className="text-[11px] font-semibold">Day {idx + 1}</p>
               <p className="text-xs">{Number(dailyRain).toFixed(1)} mm</p>
             </div>
           ))}

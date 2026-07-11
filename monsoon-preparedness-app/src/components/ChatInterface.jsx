@@ -86,14 +86,14 @@ export default function ChatInterface({ userProfile, language, onOpenAction }) {
 
   return (
     <div className="flex-1 flex flex-col bg-bg-primary min-h-0">
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4 md:px-8">
+      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-3 md:px-5">
         {messages.map(msg => (
           <div
             key={msg.id}
             className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-xs md:max-w-md lg:max-w-lg px-4 py-3 rounded-lg ${
+              className={`max-w-xs md:max-w-md lg:max-w-2xl px-4 py-3 rounded-lg shadow-sm ${
                 msg.type === 'user'
                   ? 'bg-primary text-white'
                   : 'bg-bg-secondary border border-border-default text-text-primary'
@@ -104,7 +104,7 @@ export default function ChatInterface({ userProfile, language, onOpenAction }) {
               {msg.alerts?.length > 0 && (
                 <div className="mt-3 space-y-2">
                   {msg.alerts.map((alert, idx) => (
-                    <div key={idx} className="rounded-lg border border-yellow-700 bg-yellow-950 px-3 py-2 text-xs text-yellow-100">
+                    <div key={idx} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-700">
                       {alert.text}
                     </div>
                   ))}
@@ -145,7 +145,7 @@ export default function ChatInterface({ userProfile, language, onOpenAction }) {
       </div>
 
       {messages.length === 1 && (
-        <div className="px-4 py-4 md:px-8 border-t border-border-default">
+         <div className="px-3 py-3 md:px-5 border-t border-border-light bg-bg-secondary">
           <p className="text-xs uppercase text-text-muted font-semibold mb-3">Quick Questions</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {suggestedQuestions.map((q, idx) => (
@@ -161,7 +161,7 @@ export default function ChatInterface({ userProfile, language, onOpenAction }) {
         </div>
       )}
 
-      <div className="px-4 py-4 md:px-8 border-t border-border-default">
+       <div className="px-3 py-3 md:px-5 border-t border-border-light bg-bg-secondary">
         <div className="flex gap-2">
           <input
             type="text"

@@ -146,7 +146,7 @@ export default function WelcomeScreen({ auth, onProfileCreate, onLogout }) {
         )}
 
         {error && (
-          <div className="mt-6 rounded-lg border border-red-700 bg-red-950 px-4 py-3 text-sm text-red-200">
+          <div className="mt-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {error}
           </div>
         )}

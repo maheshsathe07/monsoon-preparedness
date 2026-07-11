@@ -38,7 +38,7 @@ export default function Sidebar({ onSelectAction, language, onLanguageChange, t,
               <span className="text-white font-bold text-lg">M</span>
             </div>
             <div>
-              <h1 className="font-bold text-white">Monsoon Prep</h1>
+              <h1 className="font-bold text-text-primary">Monsoon Prep</h1>
               <p className="text-xs text-text-muted">Stay Safe</p>
             </div>
           </div>

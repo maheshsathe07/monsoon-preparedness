@@ -93,7 +93,7 @@ export default function EmergencyIDModal({ onClose, userProfile }) {
 
         <div className="flex-1 overflow-y-auto px-6 py-6">
           {error && (
-            <div className="mb-4 rounded-lg border border-red-700 bg-red-950 px-3 py-2 text-sm text-red-200">
+            <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
               {error}
             </div>
           )}
@@ -225,7 +225,7 @@ function Field({ label, value, onChange, type = 'text', placeholder = '' }) {
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full px-3 py-2 bg-bg-tertiary border border-border-default rounded-lg text-sm outline-none focus:border-primary"
+        className="w-full px-3 py-2 bg-white border border-border-default rounded-lg text-sm outline-none focus:border-primary"
       />
     </div>
   )
